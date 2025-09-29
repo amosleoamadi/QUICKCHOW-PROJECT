@@ -44,7 +44,6 @@ const styles = {
     width: "100%",
     boxSizing: "border-box",
     backgroundColor: "#F5F7FA",
-    textAlign: "left",
     outline: "none",
   },
 
