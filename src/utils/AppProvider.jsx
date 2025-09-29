@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { AppContext } from "./AppContext";
 
 const AppProvider = ({ children }) => {
-  const [popup, setPopup] = useState(false);
+  const [popup, setPopup] = useState(null);
   return (
     <AppContext.Provider value={{ popup, setPopup }}>
       {children}

@@ -9,8 +9,11 @@ const Header = () => {
   const nav = useNavigate();
   const [active, setActive] = useState("Home");
   const { setPopup } = useContext(AppContext);
-  const handlePopup = () => {
-    setPopup(true);
+  const handlePopupSignUp = () => {
+    setPopup("signup");
+  };
+  const handlePopupLogin = () => {
+    setPopup("login");
   };
   return (
     <HeaderContainer>
@@ -43,8 +46,16 @@ const Header = () => {
           </HeaderUl>
         </HeaderNav>
         <HeaderAuth>
-          <Button text="Sign Up" className="signup_btn" onClick={handlePopup} />
-          <Button text="Sign In" className="signin_btn" />
+          <Button
+            text="Sign Up"
+            className="signup_btn"
+            onClick={handlePopupSignUp}
+          />
+          <Button
+            text="Sign In"
+            className="signin_btn"
+            onClick={handlePopupLogin}
+          />
         </HeaderAuth>
       </HeaderWrapper>
     </HeaderContainer>
@@ -54,10 +65,12 @@ const Header = () => {
 export default Header;
 const HeaderContainer = styled.div`
   width: 100%;
-  height: 70px;
+  height: 75px;
   background-color: rgba(43, 43, 53, 1);
   display: flex;
   justify-content: center;
+  position: sticky;
+  top: 0;
 `;
 const HeaderWrapper = styled.article`
   width: 90%;

@@ -3,7 +3,7 @@ import styled from "styled-components";
 export const AuthContainer = styled.main`
   width: 100%;
   height: 100vh;
-  background-color: #2a2a3844;
+  background-color: #0000006f;
   position: fixed;
   display: flex;
   align-items: center;
@@ -14,7 +14,8 @@ export const AuthContainer = styled.main`
 `;
 export const AuthWrapper = styled.div`
   width: 35%;
-  height: 88%;
+  height: 89%;
+  min-height: max-content;
   background-color: rgba(255, 255, 255, 1);
   border-radius: 20px;
   display: flex;
@@ -22,6 +23,15 @@ export const AuthWrapper = styled.div`
   padding: 0.9rem;
   align-items: center;
   gap: 0.9rem;
+
+  p {
+    color: rgba(134, 134, 133, 1);
+
+    span {
+      cursor: pointer;
+      color: rgba(43, 43, 53, 1);
+    }
+  }
 `;
 export const AuthInfo = styled.article`
   width: 100%;
@@ -51,6 +61,7 @@ export const AuthBackBtn = styled.div`
   height: 100%;
   display: flex;
   justify-content: center;
+  align-items: center;
 
   .back_btn {
     width: 2.5rem;
@@ -58,23 +69,31 @@ export const AuthBackBtn = styled.div`
     border-radius: 2.5rem;
     border: 1px solid gray;
     background-color: transparent;
-    font-size: 20px;
+    font-size: 25px;
+    font-weight: 400;
     cursor: pointer;
   }
 `;
-export const AuthForm = styled.div`
+export const AuthForm = styled.form`
   width: 80%;
   height: 80%;
-  background-color: red;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   gap: 0.5rem;
+
+  .submit_btn {
+    background-color: rgba(43, 43, 53, 1);
+    color: white;
+    border: none;
+    height: 48px;
+    border-radius: 10px;
+    cursor: pointer;
+  }
 `;
 export const AuthNames = styled.article`
   width: 100%;
   height: 4.8rem;
-  background-color: aqua;
   display: flex;
   gap: 0.7rem;
 `;
@@ -125,7 +144,6 @@ export const AuthLastName = styled.section`
 export const AuthEmail = styled.div`
   width: 100%;
   height: 4.8rem;
-  background-color: purple;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
@@ -163,7 +181,6 @@ export const AuthEmail = styled.div`
 export const AuthPhonumber = styled.div`
   width: 100%;
   height: 4.8rem;
-  background-color: green;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
@@ -201,7 +218,6 @@ export const AuthPhonumber = styled.div`
 export const AuthReferal = styled.div`
   width: 100%;
   height: 4.8rem;
-  background-color: blue;
   display: flex;
   flex-direction: column;
   gap: 0.6rem;
@@ -221,11 +237,11 @@ export const AuthReferal = styled.div`
     background-color: rgba(245, 247, 250, 1);
   }
 `;
-export const AuthHolder = styled`
+export const AuthHolder = styled.div`
   width: 100%;
-  height: 90%;
-  background-color: aqua;
+  height: 80%;
   display: flex;
   flex-direction: column;
+  justify-content: space-between;
   gap: 0.5rem;
 `;
