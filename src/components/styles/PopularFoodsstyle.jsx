@@ -33,12 +33,13 @@ export const ProductDisplay = styled.div`
   gap: 1.7rem;
 `;
 export const ProductDetails = styled.div`
-  width: 60%;
+  width: 45%;
   height: max-content;
   align-self: center;
   display: flex;
-  flex-wrap: wrap;
+  align-items: center;
   gap: 1.5rem;
+
   .sectrion_btn {
     width: max-content;
     height: 28px;
