@@ -10,21 +10,21 @@ const styles = {
     fontSize: "2.5em",
     fontWeight: "bold",
     marginBottom: "20px",
-    color: "#333"
+    color: "#333",
   },
 
   subtitle: {
     color: "#666",
     fontSize: "1.1em",
     marginBottom: "30px",
-    lineHeight: "1.5"
+    lineHeight: "1.5",
   },
 
   form: {
     display: "flex",
     flexDirection: "column",
     gap: "20px",
-    alignItems: "center"
+    alignItems: "center",
   },
 
   label: {
@@ -33,7 +33,7 @@ const styles = {
     marginBottom: "5px",
     color: "#18181aff",
     fontSize: "1em",
-    fontWeight: "500"
+    fontWeight: "500",
   },
 
   input: {
@@ -60,7 +60,7 @@ const styles = {
 
   textareaFocus: {
     outline: "none",
-    borderColor: "#949494"
+    borderColor: "#949494",
   },
 
   button: {

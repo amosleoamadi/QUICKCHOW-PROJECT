@@ -73,9 +73,11 @@ const SliderWrapper = styled.div`
   p {
     font-weight: 600;
     font-size: 16px;
+    color: #2b2b35;
   }
 
   h4 {
     text-align: end;
+    color: #2b2b35;
   }
 `;

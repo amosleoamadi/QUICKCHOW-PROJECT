@@ -11,6 +11,7 @@ export const AuthContainer = styled.main`
   top: 0;
   left: 0;
   right: 0;
+  z-index: 10000;
 `;
 export const AuthWrapper = styled.div`
   width: 35%;

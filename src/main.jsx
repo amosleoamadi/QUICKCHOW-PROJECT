@@ -4,14 +4,18 @@ import "./index.css";
 import App from "./App.jsx";
 import AppProvider from "./utils/AppProvider.jsx";
 import { ToastContainer } from "react-toastify";
+import { Provider } from "react-redux";
+import Store from "./app/store.js";
 
 createRoot(document.getElementById("root")).render(
   <>
     <StrictMode>
-      <AppProvider>
-        <App />
-      </AppProvider>
+      <Provider store={Store}>
+        <AppProvider>
+          <App />
+        </AppProvider>
+      </Provider>
     </StrictMode>
-    <ToastContainer autoClose={2000} />
+    <ToastContainer autoClose={2000} className="toast" />
   </>
 );

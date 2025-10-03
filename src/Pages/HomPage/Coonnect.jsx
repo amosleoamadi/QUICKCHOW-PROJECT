@@ -29,13 +29,11 @@ const Coonnect = () => {
       <AllInfo>
         {about.map((item, index) => (
           <HolderContent key={index}>
-            <Wrapper>
-              <Logo>
-                <img src={item.icon} alt="" />
-              </Logo>
-              <h4>{item.info}</h4>
-              <p>{item.des}</p>
-            </Wrapper>
+            <Logo>
+              <img src={item.icon} alt="" />
+            </Logo>
+            <h4>{item.info}</h4>
+            <p>{item.des}</p>
           </HolderContent>
         ))}
       </AllInfo>
@@ -64,10 +62,11 @@ const AllInfo = styled.div`
   display: flex;
   justify-content: space-around;
 `;
-const Wrapper = styled.div`
-  width: 100%;
+const HolderContent = styled.div`
+  width: 31%;
   height: 100%;
-  background-color: #000000b7;
+  border: 4px solid rgba(250, 204, 21, 1);
+  border-radius: 13px;
   display: flex;
   flex-direction: column;
   padding: 1.2rem;
@@ -77,25 +76,17 @@ const Wrapper = styled.div`
   h4 {
     font-size: 20px;
     font-weight: 600;
-    color: white;
+    color: #2b2b35;
   }
 
   p {
     font-weight: 400;
-    color: white;
+    color: #2b2b35;
   }
 `;
-const HolderContent = styled.div`
-  width: 31%;
-  height: 100%;
-  background-image: url(${background});
-  background-size: cover;
-  border: 4px solid rgba(250, 204, 21, 1);
-  border-radius: 13px;
-`;
 const Logo = styled.div`
-  width: 35px;
-  height: 35px;
+  width: 30px;
+  height: 30px;
 
   img {
     width: 100%;

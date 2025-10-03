@@ -4,8 +4,10 @@ import Button from "../../components/Ui/Button";
 import bike from "../../assets/Bike.png";
 import BG from "../../assets/BG.jpg";
 import { AppContext } from "../../utils/AppContext";
+import { useNavigate } from "react-router-dom";
 
 const HomeHero = () => {
+  const nav = useNavigate();
   const { popup, setPopup } = useContext(AppContext);
   return (
     <Hero1Container>
@@ -20,7 +22,11 @@ const HomeHero = () => {
           and focus.
         </p>
         <div className="btn_area">
-          <Button className="explore_btn" text="Explore now" />
+          <Button
+            className="explore_btn"
+            text="Explore now"
+            onClick={() => nav("/top-kitchen")}
+          />
           <Button
             className="order_btn"
             text="Order now"
@@ -39,10 +45,10 @@ export default HomeHero;
 const Hero1Container = styled.div`
   width: 100%;
   height: 97vh;
-  background: linear-gradient(to right, #25252ef4, #2b2b35), url(${BG});
+  background: linear-gradient(to right, #25252ee4, #2b2b35), url(${BG});
   background-repeat: no-repeat;
   background-position: left center;
-  background-size: contain;
+  background-size: cover;
   display: flex;
   justify-content: center;
   border-bottom-right-radius: 25rem;
