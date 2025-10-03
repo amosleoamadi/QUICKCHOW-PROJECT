@@ -4,25 +4,30 @@ import logo from "../../assets/Logo.svg";
 import Button from "../Ui/Button";
 import { AppContext } from "../../utils/AppContext";
 import { useNavigate } from "react-router-dom";
+import { FaUserCircle } from "react-icons/fa";
 
 const Header = () => {
   const nav = useNavigate();
   const [active, setActive] = useState("Home");
-  const { setPopup } = useContext(AppContext);
+  const { setPopup, user } = useContext(AppContext);
+
   const handlePopupSignUp = () => {
     setPopup("signup");
   };
+
   const handlePopupLogin = () => {
     setPopup("login");
   };
+
   return (
     <HeaderContainer>
       <HeaderWrapper>
         <HeaderLogo>
-          <QuickChowLogo>
-            <img src={logo} alt="" />
+          <QuickChowLogo onClick={() => nav("/")}>
+            <img src={logo} alt="QuickChow Logo" />
           </QuickChowLogo>
         </HeaderLogo>
+
         <HeaderNav>
           <HeaderUl>
             <Headerlist
@@ -39,23 +44,33 @@ const Header = () => {
             </Headerlist>
             <Headerlist
               className={`${active === "Contact" ? "active" : ""}`}
-              onClick={() => (setActive("Contact"), nav("contact"))}
+              onClick={() => (setActive("Contact"), nav("/contact"))}
             >
               Contact & Support
             </Headerlist>
           </HeaderUl>
         </HeaderNav>
+
         <HeaderAuth>
-          <Button
-            text="Sign Up"
-            className="signup_btn"
-            onClick={handlePopupSignUp}
-          />
-          <Button
-            text="Sign In"
-            className="signin_btn"
-            onClick={handlePopupLogin}
-          />
+          {user ? (
+            <UserProfile>
+              <FaUserCircle className="profile_icon" />
+              <span>{user.firstName}</span>
+            </UserProfile>
+          ) : (
+            <>
+              <Button
+                text="Sign Up"
+                className="signup_btn"
+                onClick={handlePopupSignUp}
+              />
+              <Button
+                text="Sign In"
+                className="signin_btn"
+                onClick={handlePopupLogin}
+              />
+            </>
+          )}
         </HeaderAuth>
       </HeaderWrapper>
     </HeaderContainer>
@@ -63,6 +78,7 @@ const Header = () => {
 };
 
 export default Header;
+
 const HeaderContainer = styled.div`
   width: 100%;
   height: 75px;
@@ -71,19 +87,23 @@ const HeaderContainer = styled.div`
   justify-content: center;
   position: sticky;
   top: 0;
+  z-index: 10000;
 `;
+
 const HeaderWrapper = styled.article`
   width: 90%;
   height: 100%;
   display: flex;
   justify-content: space-between;
 `;
+
 const HeaderLogo = styled.div`
   width: 20%;
   height: 100%;
   display: flex;
   align-items: center;
 `;
+
 const HeaderNav = styled.div`
   width: 40%;
   height: 100%;
@@ -91,12 +111,13 @@ const HeaderNav = styled.div`
   align-items: center;
   justify-content: center;
 `;
+
 const HeaderAuth = styled.div`
   width: 20%;
   height: 100%;
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-end;
   gap: 0.7rem;
 
   .signup_btn {
@@ -107,12 +128,6 @@ const HeaderAuth = styled.div`
     cursor: pointer;
     background-color: rgba(250, 204, 21, 1);
     font-size: 16px;
-    transform: scale(1);
-
-    &:hover {
-      transform: scale(1.1);
-      transition: 200ms ease;
-    }
   }
 
   .signin_btn {
@@ -123,20 +138,13 @@ const HeaderAuth = styled.div`
     color: white;
     cursor: pointer;
     background-color: transparent;
-    transform: scale(1);
-
-    &:hover {
-      transform: scale(1.09);
-      transition: 200ms ease;
-      background-color: rgba(250, 204, 21, 1);
-      color: black;
-      border: none;
-    }
   }
 `;
+
 const QuickChowLogo = styled.div`
   width: 70%;
   height: 75%;
+  cursor: pointer;
 
   img {
     width: 100%;
@@ -144,6 +152,7 @@ const QuickChowLogo = styled.div`
     object-fit: cover;
   }
 `;
+
 const HeaderUl = styled.ul`
   display: flex;
   align-items: center;
@@ -152,6 +161,7 @@ const HeaderUl = styled.ul`
   gap: 2rem;
   width: 100%;
 `;
+
 const Headerlist = styled.li`
   color: white;
   cursor: pointer;
@@ -163,6 +173,19 @@ const Headerlist = styled.li`
   }
 
   &:hover {
+    color: rgba(250, 204, 21, 1);
+  }
+`;
+
+const UserProfile = styled.div`
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: white;
+  font-size: 16px;
+
+  .profile_icon {
+    font-size: 1.8rem;
     color: rgba(250, 204, 21, 1);
   }
 `;

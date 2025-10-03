@@ -20,16 +20,23 @@ import "animate.css";
 import Input from "../components/Ui/Input";
 import { MdOutlineEmail } from "react-icons/md";
 import { toast } from "react-toastify";
+import { useSignupMutation } from "../features/authApi";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../features/authSlice";
 
 const SignUp = () => {
   const { popup, setPopup } = useContext(AppContext);
+  const dispatch = useDispatch();
+
   const [userinfo, setUserinfo] = useState({
     firstName: "",
     lastName: "",
     email: "",
     password: "",
-    phoneNumber: "",
   });
+
+  const [signup, { isLoading }] = useSignupMutation();
+
   const handleOnchange = (e) => {
     const { name, value } = e.target;
     setUserinfo((prev) => ({
@@ -37,30 +44,35 @@ const SignUp = () => {
       [name]: value,
     }));
   };
+
   const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$/;
-  const handleSubmit = (e) => {
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (
-      !userinfo.email ||
-      !userinfo.firstName ||
-      !userinfo.lastName ||
-      !userinfo.phoneNumber ||
-      !userinfo.password
-    ) {
-      toast.error("Invalid Credentials");
-    } else if (!emailRegex.test(userinfo.email)) {
-      toast.error("Invalid email format");
-    } else if (
-      userinfo.phoneNumber.length <= 10 ||
-      userinfo.phoneNumber.length > 11
-    ) {
-      toast.error("Phone number is not correct");
-    } else if (userinfo.password.length <= 6) {
-      toast.error("Password shold be more than 6");
-    } else {
-      toast.success("Sign up successful");
+
+    const { firstName, lastName, email, password } = userinfo;
+
+    if (!firstName || !lastName || !email || !password) {
+      return toast.error("All fields are required");
+    }
+    if (!emailRegex.test(email)) {
+      return toast.error("Invalid email format");
+    }
+    if (password.length <= 6) {
+      return toast.error("Password should be more than 6 characters");
+    }
+
+    try {
+      const user = await signup(userinfo).unwrap();
+      dispatch(setCredentials(user));
+      toast.success(user.message || "Sign up successful");
+
+      setPopup({ type: "verifyemail", email });
+    } catch (err) {
+      toast.error(err.data?.message || "Sign up failed");
     }
   };
+
   return (
     <>
       {popup === "signup" && (
@@ -79,15 +91,16 @@ const SignUp = () => {
                 />
               </AuthBackBtn>
             </AuthInfo>
+
             <AuthForm onSubmit={handleSubmit}>
               <AuthHolder>
                 <AuthNames>
                   <AuthFirstName>
                     <h4>First Name</h4>
                     <Input
-                      className="firstname_input"
                       type="text"
                       name="firstName"
+                      className="firstname_input"
                       value={userinfo.firstName}
                       onChange={handleOnchange}
                     />
@@ -95,55 +108,63 @@ const SignUp = () => {
                   <AuthLastName>
                     <h4>Last Name</h4>
                     <Input
-                      className="lastname_input"
                       type="text"
                       name="lastName"
+                      className="lastname_input"
                       value={userinfo.lastName}
                       onChange={handleOnchange}
                     />
                   </AuthLastName>
                 </AuthNames>
+
                 <AuthEmail>
                   <h4>Email</h4>
                   <div className="input_email">
                     <MdOutlineEmail className="email_icon" />
                     <Input
-                      className="email_input"
                       type="text"
                       name="email"
+                      className="email_input"
                       value={userinfo.email}
                       onChange={handleOnchange}
                     />
                   </div>
                 </AuthEmail>
+
                 <AuthReferal>
                   <h4>Password</h4>
                   <Input
-                    className="referral_input"
                     type="text"
-                    name="refferal"
+                    name="password"
+                    className="referral_input"
                     value={userinfo.password}
                     onChange={handleOnchange}
                   />
                 </AuthReferal>
+
                 <AuthPhonumber>
                   <h4>Phone Number</h4>
                   <div className="input_phone">
                     <h5>NG</h5>
                     <p>+234</p>
                     <Input
-                      className="phone_input"
                       type="text"
                       name="phoneNumber"
+                      className="phone_input"
                       placeholder="07033340773"
-                      value={userinfo.phoneNumber}
-                      onChange={handleOnchange}
                     />
                   </div>
                 </AuthPhonumber>
               </AuthHolder>
-              <Button className="submit_btn" text="Next" type="submit" />
+
+              <Button
+                className="submit_btn"
+                text={isLoading ? "Signing up..." : "Next"}
+                type="submit"
+                disabled={isLoading}
+              />
             </AuthForm>
+
             <p>
               Have an account?{" "}
               <span onClick={() => setPopup("login")}>Sign in</span>

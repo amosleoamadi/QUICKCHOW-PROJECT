@@ -17,10 +17,6 @@ export const Element = createBrowserRouter([
         element: <HomePage />,
       },
       {
-        path: "checkout",
-        element: <CheckOut />,
-      },
-      {
         path: "contact",
         element: <Contact />,
       },
@@ -33,9 +29,13 @@ export const Element = createBrowserRouter([
         element: <TopKitchen />,
       },
       {
-        path: "about-us",
+        path: "popular",
         element: <PopularFoods />,
       },
     ],
+  },
+  {
+    path: "/checkout",
+    element: <CheckOut />,
   },
 ]);

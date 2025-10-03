@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { AppContext } from "../utils/AppContext";
 import {
   AuthBackBtn,
@@ -12,9 +12,43 @@ import Button from "../components/Ui/Button";
 import "animate.css";
 import Input from "../components/Ui/Input";
 import { MdOutlineEmail } from "react-icons/md";
+import { toast } from "react-toastify";
+import { useLoginMutation } from "../features/authApi";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../features/authSlice";
 
 const Login = () => {
-  const { popup, setPopup } = useContext(AppContext);
+  const { popup, setPopup, setUser, user } = useContext(AppContext);
+  const dispatch = useDispatch();
+
+  const [userinfo, setUserinfo] = useState({
+    email: "",
+    password: "",
+  });
+
+  const [login, { isLoading }] = useLoginMutation();
+
+  const handleOnchange = (e) => {
+    const { name, value } = e.target;
+    setUserinfo((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
+  const handleSumbit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const user = await login(userinfo).unwrap();
+
+      setUser(user.user);
+      localStorage.setItem("user", JSON.stringify(user.user));
+
+      toast.success(user.message || "Sign in successful");
+    } catch (err) {
+      toast.error(err.data?.message || "Sign in failed");
+    }
+  };
   return (
     <>
       {popup === "login" && (
@@ -29,7 +63,7 @@ const Login = () => {
                 />
               </AuthBackBtn>
             </AuthTop>
-            <AuthFormation>
+            <AuthFormation onSubmit={handleSumbit}>
               <AuthText>
                 <h2>Sign In</h2>
                 <p>Sign in to continue</p>
@@ -40,7 +74,13 @@ const Login = () => {
                     <h4>Email</h4>
                     <div className="input_email">
                       <MdOutlineEmail className="email_icon" />
-                      <Input className="email_input" type="text" name="email" />
+                      <Input
+                        className="email_input"
+                        type="text"
+                        name="email"
+                        onClick={handleOnchange}
+                        value={userinfo.email}
+                      />
                     </div>
                   </AuthEmail>
                   <AuthReferal>
@@ -48,7 +88,9 @@ const Login = () => {
                     <Input
                       className="referral_input"
                       type="text"
-                      name="refferal"
+                      name="password"
+                      onClick={handleOnchange}
+                      value={userinfo.password}
                     />
                   </AuthReferal>
                   <AuthForgetPass>
@@ -59,7 +101,11 @@ const Login = () => {
                     <p>Forget password?</p>
                   </AuthForgetPass>
                 </AuthDetailHolder>
-                <Button className="submit_btn" text="Next" />
+                <Button
+                  className="submit_btn"
+                  text={isLoading ? "Logging in..." : "Next"}
+                  type="submit"
+                />
               </AuthDetails>
             </AuthFormation>
             <p className="bottom">
